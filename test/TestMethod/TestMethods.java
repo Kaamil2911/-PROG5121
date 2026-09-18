@@ -54,7 +54,7 @@ public class TestMethods {
         assertEquals(false, actual);
     }
 
-    // These are the assert true/false unit tests according to assignment criteria
+    // These are the assert true/false unit tests 
     @Test
     public void testLoginSuccessful() {
         // Verifies login successful returns True
