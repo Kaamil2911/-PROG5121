@@ -1,118 +1,83 @@
 package login;
 
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Login {
 
     public static void main(String[] args) {
-        
         Scanner input = new Scanner(System.in);
-        String firstName = "";
-        String lastName = "";
-        boolean isregistered;
         
         System.out.println("""
-                           Welcome User !
-                           You are required to Create an Account
+                           Welcome User!
+                           You are required to Create an Account.
                            Please do the following:
                            """);
-        
-        
-        System.out.println("Enter your first name");
-        firstName = input.nextLine();
-        
-        System.out.println("Enter your last name");
-        lastName = input.nextLine();
-        System.out.println("Create a username: ");
+
+        System.out.println("Enter your first name:");
+        String firstName = input.nextLine();
+
+        System.out.println("Enter your last name:");
+        String lastName = input.nextLine();
+
+        System.out.println("Create a username:");
         String userName = input.nextLine();
-        if (userName.contains("_") && userName.length()< 6){
-               System.out.println("Username captured");
-            }
-           else{
-               System.out.println("not captured");}
-        
-        
-        
-        System.out.println("Create a password: ");
+        checkUserName(userName);
+
+        System.out.println("Create a password:");
         String passWord = input.nextLine();
-        String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$";
-        if (passWord.matches(regex)) {
-            System.out.println("Password successfully captured.");
-            } 
-        else {
-        System.out.println("Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.");
-        }
-        
-        System.out.print("Enter a phone number: ");
+        checkPasswordComplexity(passWord);
+
+        System.out.println("Enter a phone number:");
         String phoneNumber = input.nextLine();
-        
-        String phoneRegex = "^\\+27[0-9]{8,9}$";
-        
-        if (phoneNumber.matches(phoneRegex)) {
-            System.out.println("Cell phone number successfully added.");
-            
-        } else {
-            System.out.println("Cell phone number incorrectly formatted or does not contain international code.");
-            
-        }
-        
-        
-        System.out.println("Please Login into your Account:");
-        System.out.println("Enter your Username: ");
+        checkCellPhoneNumber(phoneNumber);
+
+        System.out.println("\nPlease Login into your Account:");
+        System.out.println("Enter your Username:");
         String loginName = input.nextLine();
-        
-        System.out.println("Enter your Password: ");
+
+        System.out.println("Enter your Password:");
         String loginPassword = input.nextLine();
-        
-        if (loginName.equals(userName) && loginPassword.equals(passWord)){
-            System.out.println("Welcome " + firstName + " " + lastName + " it is great to see you again");
-            isregistered = true;
-            
+        // checks if the user entered correct details, if true, the user is regeistered, if false, they arent registered
+        boolean isRegistered;
+        if (loginName.equals(userName) && loginPassword.equals(passWord)) {
+            System.out.println("Welcome " + firstName + " " + lastName + ", it is great to see you again.");
+            isRegistered = true;
+        } else {
+            System.out.println("Username or password incorrect, please try again.");
+            isRegistered = false;
         }
-        else{
-                System.out.println("Username or password incorrect, please try again");
-                isregistered = false;
-                }
+
+        System.out.println(registerUser(isRegistered));
     }
-    // check username method for validation
-    public static boolean checkUserName(String userName){
-         boolean isvalid = false;
-         // using && operator to check for an underscore and length of input
-        if (userName.contains("_") && userName.length()< 6){
-               System.out.println("Username captured");
-               isvalid = true;
-               
-           }
-           else{
-               System.out.println("not captured");}
-        return isvalid;
-        
+
+    // Check username method for validation
+    public static boolean checkUserName(String userName) {
+        if (userName.contains("_") && userName.length() < 6) {
+            System.out.println("Username captured");
+            return true;
+        } else {
+            System.out.println("not captured");
+            return false;
+        }
     }
-    // check password for validation
-    public static boolean checkPasswordComplexity(String Password){
-        //used regex to check for capital letter, length and special character
+
+    // Check password for complexity validation
+    public static boolean checkPasswordComplexity(String password) {
         String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$";
-        boolean passwordValid = false;
-        
-        if (Password.matches(regex)) {
+
+        if (password.matches(regex)) {
             System.out.println("Password successfully captured.");
-            passwordValid = true; 
-            
-        } 
-        else {
-            
-        System.out.println("Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.");
+            return true;
+        } else {
+            System.out.println("Password is not correctly formatted; please ensure that the password contains at least eight characters, a capital letter, a number, and a special character.");
+            return false;
         }
-        return passwordValid;
-        
     }
-    
-    public static boolean checkCellPhoneNumber(String phoneNumber){
-        // Enforces starting with +27 followed by exactly 9 digits (10 digits total after +)
+
+    // Check cell phone number for validation
+    public static boolean checkCellPhoneNumber(String phoneNumber) {
         String phoneRegex = "^\\+27[0-9]{8,9}$";
-        
+
         if (phoneNumber.matches(phoneRegex) && phoneNumber.length() <= 12) {
             System.out.println("Cell phone number successfully added.");
             return true;
@@ -121,21 +86,13 @@ public class Login {
             return false;
         }
     }
-    
-    
-    
-    
-    
-    public static String registerUser(boolean registered){
-        if (registered == true){
+
+    // Return status message based on registration
+    public static String registerUser(boolean registered) {
+        if (registered) {
             return "User registered successfully";
-            
-        }
-        else{
+        } else {
             return "incorrect username/password, registration incomplete";
-            
         }
     }
-    
-        
-    }
+}
