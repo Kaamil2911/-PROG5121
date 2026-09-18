@@ -31,32 +31,31 @@ public class Login {
         String phoneNumber = input.nextLine();
         checkCellPhoneNumber(phoneNumber);
 
-        System.out.println("\nPlease Login into your Account:");
-        System.out.println("Enter your Username:");
-        String loginName = input.nextLine();
+        // Process Registration
+        String registrationStatus = registerUser(userName, passWord, phoneNumber);
+        System.out.println("\n" + registrationStatus);
 
-        System.out.println("Enter your Password:");
-        String loginPassword = input.nextLine();
-        // checks if the user entered correct details, if true, the user is regeistered, if false, they arent registered
-        boolean isRegistered;
-        if (loginName.equals(userName) && loginPassword.equals(passWord)) {
-            System.out.println("Welcome " + firstName + " " + lastName + ", it is great to see you again.");
-            isRegistered = true;
-        } else {
-            System.out.println("Username or password incorrect, please try again.");
-            isRegistered = false;
+        // Only proceed to Login if registration succeeded
+        if (registrationStatus.equals("The two above conditions have been met, and the user has been registered successfully.")) {
+            System.out.println("\nPlease Login into your Account:");
+            System.out.println("Enter your Username:");
+            String loginName = input.nextLine();
+
+            System.out.println("Enter your Password:");
+            String loginPassword = input.nextLine();
+
+            boolean isLoggedIn = loginUser(loginName, loginPassword, userName, passWord);
+            System.out.println(returnLoginStatus(isLoggedIn, firstName, lastName));
         }
-
-        System.out.println(registerUser(isRegistered));
     }
 
     // Check username method for validation
     public static boolean checkUserName(String userName) {
-        if (userName.contains("_") && userName.length() < 6) {
-            System.out.println("Username captured");
+        if (userName.contains("_") && userName.length() <= 5) {
+            System.out.println("Username successfully captured.");
             return true;
         } else {
-            System.out.println("not captured");
+            System.out.println("Username is not correctly formatted; please ensure that your username contains an underscore and is no more than five characters in length.");
             return false;
         }
     }
@@ -76,23 +75,40 @@ public class Login {
 
     // Check cell phone number for validation
     public static boolean checkCellPhoneNumber(String phoneNumber) {
-        String phoneRegex = "^\\+27[0-9]{8,9}$";
+        // Regex for South african number
+        String phoneRegex = "^\\+27[0-9]{9}$";
 
-        if (phoneNumber.matches(phoneRegex) && phoneNumber.length() <= 12) {
+        if (phoneNumber.matches(phoneRegex)) {
             System.out.println("Cell phone number successfully added.");
             return true;
         } else {
-            System.out.println("Cell phone number incorrectly formatted or does not contain international code.");
+            System.out.println("Cell number is incorrectly formatted or does not contain an international code; please correct the number and try again.");
             return false;
         }
     }
 
-    // Return status message based on registration
-    public static String registerUser(boolean registered) {
-        if (registered) {
-            return "User registered successfully";
+    // Evaluates criteria and returns registration status
+    public static String registerUser(String userName, String passWord, String phoneNumber) {
+        if (!checkUserName(userName)) {
+            return "The username is incorrectly formatted.";
+        } else if (!checkPasswordComplexity(passWord)) {
+            return "The password does not meet the complexity requirements.";
         } else {
-            return "incorrect username/password, registration incomplete";
+            return "The two above conditions have been met, and the user has been registered successfully.";
+        }
+    }
+
+    // Verifies entered credentials match stored credentials
+    public static boolean loginUser(String loginUsername, String loginPassword, String storedUsername, String storedPassword) {
+        return loginUsername.equals(storedUsername) && loginPassword.equals(storedPassword);
+    }
+
+    // Returns login outcome messaging
+    public static String returnLoginStatus(boolean isLoggedIn, String firstName, String lastName) {
+        if (isLoggedIn) {
+            return "Welcome " + firstName + " ," + lastName + " it is great to see you.";
+        } else {
+            return "Username or password incorrect, Login failed, please try again.";
         }
     }
 }
