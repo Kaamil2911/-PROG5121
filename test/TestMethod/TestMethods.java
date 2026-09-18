@@ -4,44 +4,54 @@ import login.Login;
 import org.junit.Test; 
 import static org.junit.Assert.*;
 
-/**
- * @author kaami
- */
 public class TestMethods {
     
     @Test
     public void testUserName() {
         String testInput = "kyl_1";
         boolean actual = Login.checkUserName(testInput);
-        assertEquals("EXPECT CORRECT FORMAT", true, actual);
-        
-        
+        // Expecting true for valid username format
+        assertEquals(true, actual);
     }
+
     @Test
     public void testIncorrectUserName() {
         String testInput = "kyle!!!!!";
         boolean actual = Login.checkUserName(testInput);
-        assertEquals("Username is not correctly formatted; please ensure that your username contains an underscore and no more than 5 characters in length", true, actual);
-        
-        
+        // Expecting false for invalid username format
+        assertEquals(false, actual);
     }
     
     @Test
     public void testPassword() {
-        String testInput = "Ch&&sec@ke99";
+        String testInput = "Ch&&sec@ke99!";
         boolean actual = Login.checkPasswordComplexity(testInput);
-        assertEquals("EXPECT CORRECT FORMAT", true, actual);
-        
-        
+        // Expecting true for valid password format
+        assertEquals(true, actual);
     }
+
     @Test
     public void testIncorrectPassword() {
         String testInput = "password";
         boolean actual = Login.checkPasswordComplexity(testInput);
-        assertEquals("Password is not correctly formatted; please ensure that the pasword contains at least eight chracters, a capital letter, a number and a special chracter.", true, actual);
-        
-        
+        // Expecting false for invalid password format
+        assertEquals(false, actual);
+    }
+    
+    @Test
+    public void testCellPhoneNumberCorrect() {
+        String testInput = "+27838968976";
+        boolean actual = Login.checkCellPhoneNumber(testInput);
+        // Expecting true for a correctly formatted cell phone number
+        assertEquals(true, actual);
+    }
+    
+    @Test
+    public void testCellPhoneNumberIncorrect() {
+        String testInput = "08966553";
+        boolean actual = Login.checkCellPhoneNumber(testInput);
+        // Expecting false for an incorrectly formatted cell phone number
+        assertEquals(false, actual);
     }
 
-   
 }
