@@ -54,4 +54,59 @@ public class TestMethods {
         assertEquals(false, actual);
     }
 
+    // These are the assert true/false unit tests according to assignment criteria
+    @Test
+    public void testLoginSuccessful() {
+        // Verifies login successful returns True
+        boolean actual = Login.loginUser("kyl_1", "Ch&&sec@ke99!", "kyl_1", "Ch&&sec@ke99!");
+        assertTrue(actual);
+    }
+
+    @Test
+    public void testLoginFailed() {
+        // Verifies login failed returns False
+        boolean actual = Login.loginUser("kyl_1", "wrongPassword", "kyl_1", "Ch&&sec@ke99!");
+        assertFalse(actual);
+    }
+
+    @Test
+    public void testUsernameCorrectlyFormattedAssertTrue() {
+        // Verifies username correctly formatted returns True
+        boolean actual = Login.checkUserName("kyl_1");
+        assertTrue(actual);
+    }
+
+    @Test
+    public void testUsernameIncorrectlyFormattedAssertFalse() {
+        // Verifies username incorrectly formatted returns False
+        boolean actual = Login.checkUserName("kyle!!!!!");
+        assertFalse(actual);
+    }
+
+    @Test
+    public void testPasswordRequirementsAssertTrue() {
+        // Verifies password meets complexity requirements returns True
+        boolean actual = Login.checkPasswordComplexity("Ch&&sec@ke99!");
+        assertTrue(actual);
+    }
+
+    @Test
+    public void testPasswordNotRequirementsAssertFalse() {
+        // Verifies password does not meet complexity requirements returns False
+        boolean actual = Login.checkPasswordComplexity("password");
+        assertFalse(actual);
+    }
+    @Test
+    public void testCellPhoneNumberCorrectlyFormattedAssertTrue() {
+        // Verifies cell phone number correctly formatted returns True
+        boolean actual = Login.checkCellPhoneNumber("+27838968976");
+        assertTrue(actual);
+    }
+
+    @Test
+    public void testCellPhoneNumberIncorrectlyFormattedAssertFalse() {
+        // Verifies cell phone number incorrectly formatted returns False
+        boolean actual = Login.checkCellPhoneNumber("08966553");
+        assertFalse(actual);
+    }
 }
