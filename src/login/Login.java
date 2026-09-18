@@ -11,7 +11,7 @@ public class Login {
         Scanner input = new Scanner(System.in);
         String firstName = "";
         String lastName = "";
-        
+        boolean isregistered;
         
         System.out.println("""
                            Welcome User !
@@ -25,7 +25,7 @@ public class Login {
         
         System.out.println("Enter your last name");
         lastName = input.nextLine();
-        System.out.print("Create a username: ");
+        System.out.println("Create a username: ");
         String userName = input.nextLine();
         if (userName.contains("_") && userName.length()< 6){
                System.out.println("Username captured");
@@ -35,7 +35,7 @@ public class Login {
         
         
         
-        System.out.print("Create a password: ");
+        System.out.println("Create a password: ");
         String passWord = input.nextLine();
         String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$";
         if (passWord.matches(regex)) {
@@ -48,24 +48,32 @@ public class Login {
         System.out.print("Enter a phone number: ");
         String phoneNumber = input.nextLine();
         
+        String phoneRegex = "^\\+27[0-9]{8,9}$";
+        
+        if (phoneNumber.matches(phoneRegex)) {
+            System.out.println("Cell phone number successfully added.");
+            
+        } else {
+            System.out.println("Cell phone number incorrectly formatted or does not contain international code.");
+            
+        }
+        
         
         System.out.println("Please Login into your Account:");
-        
         System.out.println("Enter your Username: ");
-        
         String loginName = input.nextLine();
         
         System.out.println("Enter your Password: ");
-        
         String loginPassword = input.nextLine();
         
         if (loginName.equals(userName) && loginPassword.equals(passWord)){
             System.out.println("Welcome " + firstName + " " + lastName + " it is great to see you again");
+            isregistered = true;
             
         }
         else{
                 System.out.println("Username or password incorrect, please try again");
-                
+                isregistered = false;
                 }
     }
     // check username method for validation
@@ -101,9 +109,33 @@ public class Login {
         
     }
     
-    //public static boolean checkCellPhoneNumber(String phoneNumber){
+    public static boolean checkCellPhoneNumber(String phoneNumber){
+        // Enforces starting with +27 followed by exactly 9 digits (10 digits total after +)
+        String phoneRegex = "^\\+27[0-9]{8,9}$";
         
-        
+        if (phoneNumber.matches(phoneRegex) && phoneNumber.length() <= 12) {
+            System.out.println("Cell phone number successfully added.");
+            return true;
+        } else {
+            System.out.println("Cell phone number incorrectly formatted or does not contain international code.");
+            return false;
+        }
+    }
+    
+    
+    
+    
+    
+    public static String registerUser(boolean registered){
+        if (registered == true){
+            return "User registered successfully";
+            
+        }
+        else{
+            return "incorrect username/password, registration incomplete";
+            
+        }
+    }
     
         
     }
