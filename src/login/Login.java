@@ -8,11 +8,11 @@ public class Login {
         Scanner input = new Scanner(System.in);
         
         System.out.println("""
-                           Welcome User!
+                           Welcome User
                            You are required to Create an Account.
                            Please do the following:
                            """);
-
+        // This block asks the user for their information
         System.out.println("Enter your first name:");
         String firstName = input.nextLine();
 
@@ -27,7 +27,7 @@ public class Login {
         String passWord = input.nextLine();
         checkPasswordComplexity(passWord);
 
-        System.out.println("Enter a phone number:");
+        System.out.println("Enter a phone number (NB ensure it starts with +27) :");
         String phoneNumber = input.nextLine();
         checkCellPhoneNumber(phoneNumber);
 
@@ -36,7 +36,7 @@ public class Login {
         System.out.println("\n" + registrationStatus);
 
         // Only proceed to Login if registration succeeded
-        if (registrationStatus.equals("The two above conditions have been met, and the user has been registered successfully.")) {
+        if (registrationStatus.equals("The user has been registered successfully.")) {
             System.out.println("\nPlease Login into your Account:");
             System.out.println("Enter your Username:");
             String loginName = input.nextLine();
@@ -90,11 +90,11 @@ public class Login {
     // Evaluates criteria and returns registration status
     public static String registerUser(String userName, String passWord, String phoneNumber) {
         if (!checkUserName(userName)) {
-            return "The username is incorrectly formatted.";
+            return "Credentials incorrectly formatted. Registration unsuccessful.";
         } else if (!checkPasswordComplexity(passWord)) {
             return "The password does not meet the complexity requirements.";
         } else {
-            return "The two above conditions have been met, and the user has been registered successfully.";
+            return "The user has been registered successfully.";
         }
     }
 
