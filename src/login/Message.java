@@ -33,4 +33,55 @@ public class Message {
         }
         return isValid;
     }
+   // 2. checkRecipientCell() - checks if recipients number is valid
+    
+    public String checkRecipientCell() {
+        boolean goodLength = recipient.length() <= 10;
+        boolean hasPlus = recipient.startsWith("+27");
+        
+        // 3 checks to see if length is valid and has the correct symbols 
+        if (goodLength == true) {
+            if (hasPlus == true) {
+                return "Cell phone number successfully captured.";
+            }
+        }
+        
+        return "The cell phone number is incorrectly formatted or exceeds 10 characters. Please ensure it contains an international code and is up to 10 characters.";
+    }
+
+    // 3. checkMessageLength() checks if the message is less than or = to 250 characters
+    public String checkMessageLength() {
+        int length = messageText.length();
+        if (length <= 250) {
+            return "Message ready to send.";
+        } else {
+            return "Please enter a message of less than 250 characters.";
+        }
+    }
+
+    // 4. createMessageHash() - if else to create message hash
+    public String createMessageHash() {
+        String prefix = "";
+        if (messageID.length() >= 2) {
+            prefix = messageID.substring(0, 2);
+        } else {
+            prefix = messageID;
+        }
+        
+        String trimmedText = messageText.trim();
+        String firstWord = "";
+        String lastWord = "";
+        
+        if (trimmedText.equals("") == false) {
+            String[] words = trimmedText.split(" ");
+            firstWord = words[0];
+            lastWord = words[words.length - 1];
+        }
+        
+        String combined = firstWord + lastWord;
+        String upperCombined = combined.toUpperCase();
+        
+        String hashResult = prefix + ":" + messageNumber + ":" + upperCombined;
+        return hashResult;
+    }
 }
