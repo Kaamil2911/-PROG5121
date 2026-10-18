@@ -3,16 +3,14 @@ package login;
 import java.util.Scanner;
 
 public class Login {
-
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        
+    
+    public static boolean runLoginProcess(Scanner input) {
         System.out.println("""
                            Welcome User
                            You are required to Create an Account.
                            Please do the following:
                            """);
-        // This block asks the user for their information
+        
         System.out.println("Enter your first name:");
         String firstName = input.nextLine();
 
@@ -31,11 +29,9 @@ public class Login {
         String phoneNumber = input.nextLine();
         checkCellPhoneNumber(phoneNumber);
 
-        // Process Registration
         String registrationStatus = registerUser(userName, passWord, phoneNumber);
         System.out.println("\n" + registrationStatus);
 
-        // Only proceed to Login if registration succeeded
         if (registrationStatus.equals("The user has been registered successfully.")) {
             System.out.println("\nPlease Login into your Account:");
             System.out.println("Enter your Username:");
@@ -46,10 +42,11 @@ public class Login {
 
             boolean isLoggedIn = loginUser(loginName, loginPassword, userName, passWord);
             System.out.println(returnLoginStatus(isLoggedIn, firstName, lastName));
+            return isLoggedIn;
         }
+        return false;
     }
 
-    // Check username method for validation
     public static boolean checkUserName(String userName) {
         if (userName.contains("_") && userName.length() <= 5) {
             System.out.println("Username successfully captured.");
@@ -60,10 +57,8 @@ public class Login {
         }
     }
 
-    // Check password for complexity validation
     public static boolean checkPasswordComplexity(String password) {
         String regex = "^(?=.*[A-Z])(?=.*[0-9])(?=.*[^a-zA-Z0-9]).{8,}$";
-
         if (password.matches(regex)) {
             System.out.println("Password successfully captured.");
             return true;
@@ -73,11 +68,8 @@ public class Login {
         }
     }
 
-    // Check cell phone number for validation
     public static boolean checkCellPhoneNumber(String phoneNumber) {
-        // Regex for South african number
         String phoneRegex = "^\\+27[0-9]{9}$";
-
         if (phoneNumber.matches(phoneRegex)) {
             System.out.println("Cell phone number successfully added.");
             return true;
@@ -87,7 +79,6 @@ public class Login {
         }
     }
 
-    // Evaluates criteria and returns registration status
     public static String registerUser(String userName, String passWord, String phoneNumber) {
         if (!checkUserName(userName)) {
             return "Credentials incorrectly formatted. Registration unsuccessful.";
@@ -98,12 +89,10 @@ public class Login {
         }
     }
 
-    // Verifies entered credentials match stored credentials
     public static boolean loginUser(String loginUsername, String loginPassword, String storedUsername, String storedPassword) {
         return loginUsername.equals(storedUsername) && loginPassword.equals(storedPassword);
     }
 
-    // Returns login outcome messaging
     public static String returnLoginStatus(boolean isLoggedIn, String firstName, String lastName) {
         if (isLoggedIn) {
             return "Welcome " + firstName + " ," + lastName + " it is great to see you.";
