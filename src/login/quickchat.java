@@ -96,7 +96,40 @@ public class quickchat {
             System.out.println("You have reached the message limit you selected.");
             return;
         }
+        // Calculate and display how many message slots are still left to process
+        int remaining = messageLimit - processedCount;
+        System.out.println("You may send or process up to " + remaining + " more message(s).");
+
+        // Loop through each remaining message slot based on the user's chosen limit
+        for (int i = processedCount; i < messageLimit; i++) {
+            int msgNum = i + 1;
+            System.out.println("\n--- Message " + msgNum + " of " + messageLimit + " ---");
+            
+            // Prompt user to enter the recipient's phone number
+            System.out.print("Enter recipient cell number (max 10 chars, starting with +27): ");
+            String recipient = input.nextLine();
+            recipient = recipient.trim();
+
+            // Create a message to test the recipient cell format
+            Message draft = new Message(i, recipient, "placeholder");
+            String recipientStatus = draft.checkRecipientCell();
+            
+            // Check if the recipient cell validation passed
+            boolean isRecipientOk = recipientStatus.startsWith("Cell phone number successfully");
+            if (isRecipientOk == false) {
+                System.out.println(recipientStatus);
+                i = i - 1; // Decrement index 'i' so the user can try this same slot
+                continue;  // Skip the rest of the loop and try again
+            }
+
+            // Prompt user to enter the body text of the message
+            System.out.print("Enter your message (maximum 250 characters): ");
+            String text = input.nextLine();
+    
+    
 
         
     }
+    }
 }
+
