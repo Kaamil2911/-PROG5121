@@ -84,4 +84,34 @@ public class Message {
         String hashResult = prefix + ":" + messageNumber + ":" + upperCombined;
         return hashResult;
     }
+        //  printMessages()
+    public String printMessages() {
+        String output = "Message ID: " + messageID + "\n" +
+                        "Message Hash: " + createMessageHash() + "\n" +
+                        "Recipient: " + recipient + "\n" +
+                        "Message: " + messageText;
+        return output;
+    }
+
+    // JSON export
+    public String toJson() {
+        String escapedText = messageText.replace("\"", "\\\"");
+        String jsonString = "{" +
+                "\"messageID\":\"" + messageID + "\"," +
+                "\"messageNumber\":" + messageNumber + "," +
+                "\"recipient\":\"" + recipient + "\"," +
+                "\"messageText\":\"" + escapedText + "\"," +
+                "\"messageHash\":\"" + createMessageHash() + "\"" +
+                "}";
+        return jsonString;
+    }
+
+    public String getMessageID() {
+        return messageID;
+    }
+
+    public String getMessageText() {
+        return messageText;
+    }
 }
+
