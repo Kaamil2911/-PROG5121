@@ -197,6 +197,8 @@ public class quickchat {
         
     }
     }
+    //This method, storeMessage, is responsible for saving a message object into a local JSON file named storedMessages.json. 
+    //It ensures that multiple messages are stored together neatly as a proper JSON array
     private static void storeMessage(Message message) throws IOException {
         Path file = Path.of("storedMessages.json");
         String existing = "[]";
@@ -220,6 +222,7 @@ public class quickchat {
                 updated = sub + "," + object + "]";
             } else {
                 throw new IOException("storedMessages.json is not a valid JSON array.");
+                //IO exception if the file content is formatted incorrectly
             }
         }
         
