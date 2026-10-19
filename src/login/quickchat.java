@@ -125,11 +125,88 @@ public class quickchat {
             // Prompt user to enter the body text of the message
             System.out.print("Enter your message (maximum 250 characters): ");
             String text = input.nextLine();
+            
+            // Create the official message object with the validated recipient and text
+            Message message = new Message(i, recipient, text);
+            String lengthStatus = message.checkMessageLength();
+            System.out.println(lengthStatus);
+            
+            // Check if the message text length validation passed (<= 250 characters)
+            boolean isLengthOk = lengthStatus.equals("Message ready to send.");
+            if (isLengthOk == false) {
+                i = i - 1; // Decrement index 'i' to let the user re-try this slot
+                continue;  // Skip the rest of the loop and try again
+            }
+
+            // Present the menu options for what action to take with the validated message
+            System.out.println("\nChoose what to do with this message:");
+            System.out.println("1) Send Message");
+            System.out.println("2) Disregard Message");
+            System.out.println("3) Store Message to send later");
+            System.out.print("Your choice: ");
+            String choice = input.nextLine();
+            choice = choice.trim();
+
+            // Option 1: Send the message immediately and save 
+            if (choice.equals("1") == true) {
+                SENT_MESSAGES.add(message);
+                sentCount = sentCount + 1;
+                processedCount = i + 1;
+                System.out.println("Message successfully sent");
+                String printed = message.printMessages();
+                System.out.println(printed);
+            } 
+            // Option 2: Disregard/delete the message (requires confirmation)
+            else if (choice.equals("2") == true) {
+                System.out.println("Press 0 to delete the message.");
+                System.out.print("Enter 0 to confirm disregard: ");
+                String confirm = input.nextLine();
+                confirm = confirm.trim();
+                
+                // If confirmed with '0', discard it; otherwise, cancel and let them re-try
+                if (confirm.equals("0") == true) {
+                    System.out.println("Message disregarded.");
+                    processedCount = i + 1;
+                } else {
+                    System.out.println("Disregard cancelled; message was not sent.");
+                    i = i - 1;
+                }
+            } 
+            // Option 3: Store the message into the local JSON file for later
+            else if (choice.equals("3") == true) {
+                try {
+                   storeMessage(message);
+                    System.out.println("Message successfully stored");
+                    processedCount = i + 1;
+                    String printedMsg = message.printMessages();
+                    System.out.println(printedMsg);
+                } catch (IOException ex) {
+                    // Handle file writing errors 
+                    String errMsg = ex.getMessage();
+                    System.out.println("The message could not be stored: " + errMsg);
+                }
+            } 
+            // Handle invalid menu selections by forcing a re-try on this slot
+            else {
+                System.out.println("Invalid message option. This message was not sent.");
+                i = i - 1;
+            }
     
     
 
         
     }
     }
+    private static void storeMessage(Message message) throws IOException {
+        Path file = Path.of("storedMessages.json");
+        String existing = "[]";
+        
+        boolean fileExists = Files.exists(file);
+        if (fileExists == true) {
+            existing = Files.readString(file, StandardCharsets.UTF_8);
+            existing = existing.trim();
+        }
+    
+}
 }
 
