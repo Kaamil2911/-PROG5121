@@ -2,8 +2,8 @@
 package TestMethod;
 
 import login.Message;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestmethodsProg_Part2 {
     
