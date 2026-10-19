@@ -4,7 +4,7 @@ package TestMethod;
 import login.Message;
 import org.junit.Test; 
 import static org.junit.Assert.*;
-
+//junit 
 public class TestmethodsProg_Part2 {
     
     @Test

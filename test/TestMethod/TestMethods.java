@@ -3,7 +3,7 @@ package TestMethod;
 import login.Login;
 import org.junit.Test; 
 import static org.junit.Assert.*;
-
+//junit 
 public class TestMethods {
     
     @Test
