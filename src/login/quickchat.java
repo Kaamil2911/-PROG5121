@@ -206,7 +206,27 @@ public class quickchat {
             existing = Files.readString(file, StandardCharsets.UTF_8);
             existing = existing.trim();
         }
+        String object = message.toJson();
+        String updated = "";
+        
+        boolean isEmptyOrArray = existing.isEmpty() || existing.equals("[]");
+        if (isEmptyOrArray == true) {
+            updated = "[" + object + "]";
+        } else {
+            boolean endsWithBracket = existing.endsWith("]");
+            if (endsWithBracket == true) {
+                int lastIndex = existing.length() - 1;
+                String sub = existing.substring(0, lastIndex);
+                updated = sub + "," + object + "]";
+            } else {
+                throw new IOException("storedMessages.json is not a valid JSON array.");
+            }
+        }
+        
+        Files.writeString(file, updated, StandardCharsets.UTF_8,
+                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+    }
     
 }
-}
+
 
