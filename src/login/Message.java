@@ -36,7 +36,7 @@ public class Message {
    // 2. checkRecipientCell() - checks if recipients number is valid
     
     public String checkRecipientCell() {
-        boolean goodLength = recipient.length() <= 10;
+        boolean goodLength = recipient.length() <= 12;
         boolean hasPlus = recipient.startsWith("+27");
         
         // 3 checks to see if length is valid and has the correct symbols 
