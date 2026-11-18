@@ -1,6 +1,4 @@
-
 package login;
-
 
 public class Message {
     
@@ -9,37 +7,45 @@ public class Message {
     private String recipient;
     private String messageText;
     
-    // constructor
+    // Constructor for new messages
     public Message(int messageNumber, String recipient, String messageText) {
         this.messageNumber = messageNumber;
         this.recipient = recipient;
         this.messageText = messageText;
         this.messageID = generateRandomID();
     }
-    // use math library to generate a random ID numbers 
+
+    // Constructor for loading messages from the JSON file
+    public Message(String messageID, int messageNumber, String recipient, String messageText) {
+        this.messageID = messageID;
+        this.messageNumber = messageNumber;
+        this.recipient = recipient;
+        this.messageText = messageText;
+    }
+    
+    // Generates a random ID using Math.random[cite: 1]
     private String generateRandomID() {
         long id = (long) (Math.random() * 900000000L) + 100000000L;
         String idString = String.valueOf(id);
         return idString;
     }
 
-    // checkMessageID  method uses boolean to check if message ID is valid or not based on length
+    // Checks if message ID is valid based on length[cite: 1]
     public boolean checkMessageID() {
         boolean isValid = false;
-        if (messageID != "null") {
+        if (messageID != null) {
             if (messageID.length() <= 10) {
                 isValid = true;
             }
         }
         return isValid;
     }
-   // 2. checkRecipientCell() - checks if recipients number is valid
-    
+
+    // Checks if recipient number is valid[cite: 1]
     public String checkRecipientCell() {
         boolean goodLength = recipient.length() <= 12;
         boolean hasPlus = recipient.startsWith("+27");
         
-        // 3 checks to see if length is valid and has the correct symbols 
         if (goodLength == true) {
             if (hasPlus == true) {
                 return "Cell phone number successfully captured.";
@@ -49,7 +55,7 @@ public class Message {
         return "The cell phone number is incorrectly formatted or exceeds 10 characters. Please ensure it contains an international code and is up to 10 characters.";
     }
 
-    // 3. checkMessageLength() checks if the message is less than or = to 250 characters
+    // Checks if message is <= 250 characters[cite: 1]
     public String checkMessageLength() {
         int length = messageText.length();
         if (length <= 250) {
@@ -59,7 +65,7 @@ public class Message {
         }
     }
 
-    // 4. createMessageHash() - if else to create message hash
+    // Creates the message hash[cite: 1]
     public String createMessageHash() {
         String prefix = "";
         if (messageID.length() >= 2) {
@@ -84,7 +90,8 @@ public class Message {
         String hashResult = prefix + ":" + messageNumber + ":" + upperCombined;
         return hashResult;
     }
-        //  printMessages()
+
+    // Prints message details[cite: 1]
     public String printMessages() {
         String output = "Message ID: " + messageID + "\n" +
                         "Message Hash: " + createMessageHash() + "\n" +
@@ -93,7 +100,7 @@ public class Message {
         return output;
     }
 
-    // JSON export
+    // Converts message to JSON format[cite: 1]
     public String toJson() {
         String escapedText = messageText.replace("\"", "\\\"");
         String jsonString = "{" +
@@ -110,19 +117,15 @@ public class Message {
         return messageID;
     }
 
-    public String getMessageText() {
-        return messageText;
+    public int getMessageNumber() {
+        return messageNumber;
     }
     public String getRecipient() {
         return recipient;
     }
 
-    //public String getSender() {
-        //return sender;
-    //}
-
-    public int getMessageNumber() {
-        return messageNumber;
+    public String getMessageText() {
+        return messageText;
     }
 }
 
