@@ -229,6 +229,54 @@ public class quickchat {
         Files.writeString(file, updated, StandardCharsets.UTF_8,
                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
     }
+    /*private static void loadStoredMessagesFromFile() {
+        STORED_MESSAGES.clear();
+        Path file = Path.of("storedMessages.json");
+        if (Files.exists(file) == false) {
+            return;
+        }
+        try {
+            String content = Files.readString(file, StandardCharsets.UTF_8).trim();
+            if (content.equals("[]") || content.equals("")) {
+                return;
+            }
+            if (content.startsWith("[")) {
+                content = content.substring(1);
+            }
+            if (content.endsWith("]")) {
+                content = content.substring(0, content.length() - 1);
+            }
+            
+            String[] items = content.split("\\},\\s*\\{");
+            for (int i = 0; i < items.length; i++) {
+                String item = items[i];
+                if (item.startsWith("{") == false) {
+                    item = "{" + item;
+                }
+                if (item.endsWith("}") == false) {
+                    item = item + "}";
+                }
+                
+                String msgID = extractJsonField(item, "messageID");
+                int msgNum = Integer.parseInt(extractJsonField(item, "messageNumber"));
+                String recipient = extractJsonField(item, "recipient");
+                String text = extractJsonField(item, "messageText");
+                
+                Message msg = new Message(msgID, msgNum, recipient, text);
+                STORED_MESSAGES.add(msg);
+                
+                if (MESSAGE_IDS.contains(msgID) == false) {
+                    MESSAGE_IDS.add(msgID);
+                }
+                String hash = msg.createMessageHash();
+                if (MESSAGE_HASHES.contains(hash) == false) {
+                    MESSAGE_HASHES.add(hash);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+    }*/
     
 }
 
