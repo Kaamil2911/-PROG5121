@@ -113,5 +113,16 @@ public class Message {
     public String getMessageText() {
         return messageText;
     }
+    public String getRecipient() {
+        return recipient;
+    }
+
+    //public String getSender() {
+        //return sender;
+    //}
+
+    public int getMessageNumber() {
+        return messageNumber;
+    }
 }
 
