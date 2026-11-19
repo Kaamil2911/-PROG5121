@@ -1,7 +1,7 @@
 
 package TestMethod;
 
-import login.Login;
+import login.Message;
 import org.junit.Test; 
 import static org.junit.Assert.*;
 //junit 
