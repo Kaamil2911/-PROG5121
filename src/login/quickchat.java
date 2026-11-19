@@ -15,6 +15,12 @@ public class quickchat {
     // Scanner to read user input
     private static Scanner input = new Scanner(System.in);
     private static final List<Message> SENT_MESSAGES = new ArrayList<>();
+    private static List<Message> DISREGARDED_MESSAGES = new ArrayList<>();
+    private static List<Message> STORED_MESSAGES = new ArrayList<>();
+    private static List<String> MESSAGE_HASHES = new ArrayList<>();
+    private static List<String> MESSAGE_IDS = new ArrayList<>();
+    
+    
     private static int sentCount = 0;
     private static int processedCount = 0;
 
