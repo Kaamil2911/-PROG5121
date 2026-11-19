@@ -11,14 +11,14 @@ import java.util.Scanner;
 
 public class quickchat {
     
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
     
     // Required Arrays 
-    private static List<Message> SENT_MESSAGES = new ArrayList<>();
-    private static List<Message> DISREGARDED_MESSAGES = new ArrayList<>();
-    private static List<Message> STORED_MESSAGES = new ArrayList<>();
-    private static List<String> MESSAGE_HASHES = new ArrayList<>();
-    private static List<String> MESSAGE_IDS = new ArrayList<>();
+    private static final List<Message> SENT_MESSAGES = new ArrayList<>();
+    private static final List<Message> DISREGARDED_MESSAGES = new ArrayList<>();
+    private static final List<Message> STORED_MESSAGES = new ArrayList<>();
+    private static final List<String> MESSAGE_HASHES = new ArrayList<>();
+    private static final List<String> MESSAGE_IDS = new ArrayList<>();
     
     private static int sentCount = 0;
     private static int processedCount = 0;
