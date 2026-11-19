@@ -41,7 +41,7 @@ public class Login {
             String loginPassword = input.nextLine();
 
             boolean isLoggedIn = loginUser(loginName, loginPassword, userName, passWord);
-            System.out.println(returnLoginStatus(isLoggedIn, firstName, lastName));
+            System.out.println(returnLoginStatus(isLoggedIn));
             return isLoggedIn;
         }
         return false;
@@ -93,7 +93,7 @@ public class Login {
         return loginUsername.equals(storedUsername) && loginPassword.equals(storedPassword);
     }
 
-    public static String returnLoginStatus(boolean isLoggedIn, String firstName, String lastName) {
+    public static String returnLoginStatus(boolean isLoggedIn) {
         if (isLoggedIn) {
             return "Welcome it is great to see you.";
         } else {
